@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-taste-of-people',
   standalone: true,
-  imports: [CardModule,],
+  imports: [CardModule,RouterModule],
   templateUrl: './taste-of-people.component.html',
   styleUrl: './taste-of-people.component.scss'
 })
