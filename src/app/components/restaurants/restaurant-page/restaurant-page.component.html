@@ -1,23 +1,23 @@
 <section class="tw-w-[450px]">
     <header class="tw-flex tw-flex-row">
         <div class="card flex justify-content-center">
-            <p-menu [model]="items">
-                <ng-template pTemplate="item" let-item>
-                    <a class="p-menuitem-link flex justify-content-between align-items-center p-3">
-                        <div>
-                            <span (click)="openTab(1)"> {{ item.label }}</span>
-                        </div>
-                    </a>
-                </ng-template>
-            </p-menu>
+            <p-menu [model]="menuItems"></p-menu>
         </div>
-        <p-tabView [(activeIndex)]="activeIndex" [scrollable]="true">
-            @for (tab of scrollableTabs; track tab.id) {
-            <p-tabPanel [header]="tab.title" [closable]="true" (onClose)="closeTab(1)">
-                <p>{{tab.content}}</p>
-            </p-tabPanel>
-            }
-        </p-tabView>
+        <!-- <div class="tab-list" cdkDropList (cdkDropListDropped)="onTabDrop($event)"> -->
+            <p-tabView class="tw-w-[250px]" [(activeIndex)]="activeTabIndex" [scrollable]="true" (onTabChange)="handleTabChange($event)">
+                @for (tab of tabs; track tab.id) {
+                <p-tabPanel [header]="tab.title" [selected]="tab.active" (onDrop)="handleTabDrop($event, tab.id)">
+                    <button (click)="closeTab(tab.id)">
+                        <span class="material-symbols-outlined">
+                            close
+                        </span>
+                    </button>
+                    <p>{{tab.content}}</p>
+                </p-tabPanel>
+                }
+            </p-tabView>
+        <!-- </div> -->
+  
     </header>
     <main>
 
