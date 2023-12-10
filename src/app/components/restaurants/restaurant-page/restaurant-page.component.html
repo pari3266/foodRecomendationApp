@@ -1,23 +1,37 @@
-<section class="tw-w-[450px]">
+<section>
     <header class="tw-flex tw-flex-row">
         <div class="card flex justify-content-center">
             <p-menu [model]="menuItems"></p-menu>
         </div>
-        <!-- <div class="tab-list" cdkDropList (cdkDropListDropped)="onTabDrop($event)"> -->
-            <p-tabView class="tw-w-[250px]" [(activeIndex)]="activeTabIndex" [scrollable]="true" (onTabChange)="handleTabChange($event)">
-                @for (tab of tabs; track tab.id) {
-                <p-tabPanel [header]="tab.title" [selected]="tab.active" (onDrop)="handleTabDrop($event, tab.id)">
-                    <button (click)="closeTab(tab.id)">
-                        <span class="material-symbols-outlined">
-                            close
-                        </span>
-                    </button>
-                    <p>{{tab.content}}</p>
-                </p-tabPanel>
-                }
-            </p-tabView>
-        <!-- </div> -->
-  
+        <!-- <div class="tw-w-[450px] tw-flex tw-flex-row tw-overflow-x-scroll" cdkDropList (cdkDropListDropped)="drop($event)">
+            <div class="tw-w-24 tw-m-12" *ngFor="let tab of tabs" cdkDrag>
+                <span>{{tab.title}}</span>
+                <button (click)="closeTab(tab.id)">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </button>
+                <p>{{tab.content}}</p>
+            </div>
+        </div> -->
+        <!-- <mat-tab-group (matTabChange)="tabChanged($event)">
+            <mat-tab *ngFor="let tab of tabs" label="{{tab.title}}" cdkDrag cdkDragLockAxis="y" (cdkDragDropped)="drop($event)">
+                {{tab.content}}
+            </mat-tab>
+        </mat-tab-group> -->
+
+        <p-tabView class="tw-w-[250px]" [(activeIndex)]="activeTabIndex" [scrollable]="true">
+            @for (tab of tabs; track tab.id) {
+            <p-tabPanel [header]="tab.title">
+                <button (click)="closeTab(tab.id)">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </button>
+                <p>{{tab.content}}</p>
+            </p-tabPanel>
+            }
+        </p-tabView> 
     </header>
     <main>
 

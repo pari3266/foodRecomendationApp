@@ -3,9 +3,9 @@ import { TabViewModule } from 'primeng/tabview';
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
 import { Subject } from 'rxjs';
-import { DragDropModule } from 'primeng/dragdrop';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
+import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
+import {MatTabsModule} from '@angular/material/tabs';
 interface Tab {
   title: string;
   content: string;
@@ -14,7 +14,7 @@ interface Tab {
 @Component({
   selector: 'app-restaurant-page',
   standalone: true,
-  imports: [TabViewModule, MenuModule, DragDropModule,CommonModule],
+  imports: [TabViewModule, MenuModule, CommonModule, CdkDropList, CdkDrag, MatTabsModule],
   templateUrl: './restaurant-page.component.html',
   styleUrl: './restaurant-page.component.scss'
 })
@@ -88,42 +88,13 @@ export class RestaurantPageComponent implements OnInit {
     }
   }
 
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.tabs, event.previousIndex, event.currentIndex);
+  }
+
   
-  // onTabDrop(event: any): void {
-  //   moveItemInArray(this.tabs, event.previousIndex, event.currentIndex);
-  // }
-
-  // handleDrop(event: any) {
-  //   // Access the dragged item
-  //   const draggedItem = event.dragData;
-
-  //   // Access the target droppable area
-  //   const targetDroppableArea = event.dropArea;
-
-  //   // Implement your custom logic for handling the drop
-  //   console.log(`Item dropped: ${draggedItem} onto ${targetDroppableArea}`);
-    
-  //   // Add your specific logic here, e.g., updating data structures, triggering actions, etc.
-  // }
-
-  handleTabChange(event: any) {
-    console.log(event);
-    
-    // Update your tabs array based on the selected tab
-    const selectedIndex = event.index;
-
-    const selectedTabHeader = event.tab.textLabel;
-
-    // Set the 'active' property of the tabs based on the selected tab header
-    this.tabs.forEach(tab => {
-      tab.active = tab.title === selectedTabHeader;
-    });
-    // Add any additional logic you need when a tab is changed
-    console.log(`Selected tab: ${this.tabs[selectedIndex].title}`);
+  tabChanged(event: any): void {
+    // Handle tab change here
+    console.log('Tab changed:', event);
   }
-  handleTabDrop(event: any, currentIndex: number) {
-    // Handle tab drop and update the order of tabs
-    moveItemInArray(this.tabs, event.previousIndex, currentIndex);
-  }
-
 }
