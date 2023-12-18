@@ -8,18 +8,19 @@ import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk
 import {MatTabsModule} from '@angular/material/tabs';
 import { RestaurantService } from '../../../api/restaurant.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ShowAgePipe } from "../../../pipes/show-age.pipe";
 interface Tab {
   title: string;
   content: string;
 }
 
 @Component({
-  selector: 'app-restaurant-page',
-  standalone: true,
-  imports: [TabViewModule, MenuModule, CommonModule, CdkDropList, CdkDrag, MatTabsModule, HttpClientModule],
-  providers: [RestaurantService],
-  templateUrl: './restaurant-page.component.html',
-  styleUrl: './restaurant-page.component.scss'
+    selector: 'app-restaurant-page',
+    standalone: true,
+    providers: [RestaurantService],
+    templateUrl: './restaurant-page.component.html',
+    styleUrl: './restaurant-page.component.scss',
+    imports: [TabViewModule, MenuModule, CommonModule, CdkDropList, CdkDrag, MatTabsModule, HttpClientModule, ShowAgePipe]
 })
 
 export class RestaurantPageComponent implements OnInit {

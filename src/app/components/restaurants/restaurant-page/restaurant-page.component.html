@@ -34,7 +34,10 @@
         </p-tabView> 
     </header>
     <main>
-
+        @for (user of users; track user.id) {
+            <span>{{user.name}}</span>
+            <span>{{user.age | showAge}}</span>
+        }
     </main>
     <footer>
 
