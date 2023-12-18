@@ -1,0 +1,19 @@
+<section class="tw-mt-8">
+    <header>
+        <span class="tw-ml-7 tw-text-color1">popular dishes</span>
+    </header>
+    <main class="tw-h-80 tw-overflow-y-scroll tw-ml-4">
+        @for (item of items; track item.id) {
+        <p-card class="flex tw-flex-row tw-m-8">
+            <img [src]="item.src">
+            <div class="tw-flex tw-flex-col">
+                <span class="tw-font-bold tw-text-lg">{{item.foodname}}</span>
+                <span>{{item.username}}</span>
+            </div>
+        </p-card>
+        }
+    </main>
+    <footer>
+
+    </footer>
+</section>

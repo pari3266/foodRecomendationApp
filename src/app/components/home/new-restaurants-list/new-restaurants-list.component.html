@@ -1,7 +1,7 @@
-<section class="tw-flex tw-flex-col card">
+<section class="tw-flex tw-flex-col">
     <header>
-        <div class="tw-flex tw-flex-row tw-place-content-around tw-m-8">
-            <span>new restaurants</span>
+        <div class="tw-flex tw-flex-row tw-place-content-between tw-m-8">
+            <span class="tw-text-color1">new restaurants</span>
             <div class="tw-w-4 tw-rounded-lg">
                 <span class="material-icons">
                     account_circle
@@ -10,20 +10,22 @@
         </div>
     </header>
     <main>
-        <div class="tw-flex tw-flex-row tw-place-content-center tw-justify-center">
+        <div class="tw-flex tw-flex-row tw-place-content-center tw-justify-center tw-items-center">
             @for (item of items.slice(0,3); track item.id) {
-                <p-card [header]="item.title" class="tw-flex tw-w-16 tw-place-content-between tw-m-3 tw-h-3/5">
-                    <img [src]="item.src" />
-                    <p class="m-0">
-                        {{item.description}}
-                    </p>
-                </p-card>
+            <p-card [header]="item.title" class="tw-flex tw-w-20 tw-place-content-between tw-m-2 tw-h-3/5">
+                <img [src]="item.src" />
+                <p class="m-0">
+                    {{item.description}}
+                </p>
+            </p-card>
             } @empty {
-                Empty list of restaurants
+            Empty list of restaurants
             }
 
             @if (showMore) {
-                <button>show more</button>
+            <div class="tw-flex tw-place-content-center tw-justify-center">
+                <button class="tw-bg-color3 tw-rounded-md tw-text-color5 tw-h-8 tw-w-20">show more</button>
+            </div>
             }
         </div>
     </main>
