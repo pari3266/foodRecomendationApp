@@ -6,6 +6,8 @@ import { Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import {MatTabsModule} from '@angular/material/tabs';
+import { RestaurantService } from '../../../api/restaurant.service';
+import { HttpClientModule } from '@angular/common/http';
 interface Tab {
   title: string;
   content: string;
@@ -14,7 +16,8 @@ interface Tab {
 @Component({
   selector: 'app-restaurant-page',
   standalone: true,
-  imports: [TabViewModule, MenuModule, CommonModule, CdkDropList, CdkDrag, MatTabsModule],
+  imports: [TabViewModule, MenuModule, CommonModule, CdkDropList, CdkDrag, MatTabsModule, HttpClientModule],
+  providers: [RestaurantService],
   templateUrl: './restaurant-page.component.html',
   styleUrl: './restaurant-page.component.scss'
 })
@@ -39,7 +42,9 @@ export class RestaurantPageComponent implements OnInit {
 
   menuItems: MenuItem[] | undefined;
   closedTabIndex: number | null = null; // Index of the recently closed tab
-  constructor() {
+
+  users : any = [];
+  constructor(private resService: RestaurantService) {
     // Subscribe to tab closure events
     this.closeTabSubject.subscribe((index) => this.closeTab(index));
   }
@@ -54,6 +59,13 @@ export class RestaurantPageComponent implements OnInit {
         // Add more menu items as needed
       ];
     }, 1000);
+
+
+    this.resService.getUsers().subscribe(res => {
+      console.log(res);
+      
+      this.users = res;
+    })
   }
 
 
