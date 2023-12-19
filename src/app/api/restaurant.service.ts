@@ -13,7 +13,7 @@ export class RestaurantService {
   private apiUrl = 'http://localhost:3000';
 
 
-  getUsers(): Observable<any> {
+  getUsers(): Observable<User[]> {
     return this.http.get<any>(`${this.apiUrl}/users`);
   }
 

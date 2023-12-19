@@ -9,6 +9,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { RestaurantService } from '../../../api/restaurant.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ShowAgePipe } from "../../../pipes/show-age.pipe";
+import { UserFacade } from '../../../data-store/user-store/user.facade';
+
 interface Tab {
   title: string;
   content: string;
@@ -17,10 +19,10 @@ interface Tab {
 @Component({
     selector: 'app-restaurant-page',
     standalone: true,
-    providers: [RestaurantService],
+    providers: [RestaurantService, UserFacade],
     templateUrl: './restaurant-page.component.html',
     styleUrl: './restaurant-page.component.scss',
-    imports: [TabViewModule, MenuModule, CommonModule, CdkDropList, CdkDrag, MatTabsModule, HttpClientModule, ShowAgePipe]
+    imports: [TabViewModule, MenuModule, CommonModule, CdkDropList, CdkDrag, MatTabsModule, HttpClientModule, ShowAgePipe, ]
 })
 
 export class RestaurantPageComponent implements OnInit {
@@ -45,7 +47,8 @@ export class RestaurantPageComponent implements OnInit {
   closedTabIndex: number | null = null; // Index of the recently closed tab
 
   users : any = [];
-  constructor(private resService: RestaurantService) {
+  constructor(private resService: RestaurantService,
+    private userFacade: UserFacade) {
     // Subscribe to tab closure events
     this.closeTabSubject.subscribe((index) => this.closeTab(index));
   }
@@ -61,7 +64,8 @@ export class RestaurantPageComponent implements OnInit {
       ];
     }, 1000);
 
-
+    // console.log(this.users, this.userFacade.fetchUsers());
+    
     this.resService.getUsers().subscribe(res => {
       console.log(res);
       

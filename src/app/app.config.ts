@@ -9,7 +9,7 @@ export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideClientHydration(),
     importProvidersFrom([
       BrowserAnimationsModule,
-      RouterModule
+      RouterModule,
     ])
   ],
 };

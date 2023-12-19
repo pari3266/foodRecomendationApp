@@ -5,12 +5,12 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true
 })
 export class ShowAgePipe implements PipeTransform {
-
-  transform(value: unknown, ...args: unknown[]): any {
+  text = ''
+  transform(value: unknown, ...args: unknown[]): string {
     if (value) {
-      const text = `${value} years old`
-      return text;
+      this.text = `${value} years old`
     }
+    return this.text;
   }
 
 }
