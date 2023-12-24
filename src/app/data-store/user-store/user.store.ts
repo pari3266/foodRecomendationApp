@@ -43,7 +43,8 @@ export class userState {
     @Action(fetchUsersAction)
     fetchUsers(ctx: StateContext<userStateModel>, action: fetchUsersAction) {
         ctx.setState({
-            ...ctx.getState()
+            ...ctx.getState(),
+            users: action.payload,
         })
     }
 }
@@ -51,8 +52,6 @@ export class userState {
 @NgModule({
     imports: [
         NgxsModule.forFeature([userState]),
-        // NgxsReduxDevtoolsPluginModule.forRoot(),
-        // NgxsLoggerPluginModule.forRoot(),
 ],
 })
 export class userStore {

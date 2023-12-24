@@ -19,17 +19,8 @@ export class UserFacade {
 
     @Dispatch()
     async fetchUsers() {
-        const usersObservable = this.restaurantService.getUsers();
-        try {
-            const users = await usersObservable.toPromise();
-            if (users !== undefined) {
-                return new fetchUsersAction(users);
-            } else {
-                console.error('uers is undefined');
-            }
-        } catch (error) {
-            console.error('error fetching users', error);
-        }
-        return null;
+        const users = await this.restaurantService.getUsers();
+
+        return new fetchUsersAction(users);
     }
 }

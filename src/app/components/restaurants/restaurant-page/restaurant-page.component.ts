@@ -10,6 +10,7 @@ import { RestaurantService } from '../../../api/restaurant.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ShowAgePipe } from "../../../pipes/show-age.pipe";
 import { UserFacade } from '../../../data-store/user-store/user.facade';
+import { restaurantResolver } from '../../../resolvers/restaurant.resolver';
 
 interface Tab {
   title: string;
@@ -19,7 +20,7 @@ interface Tab {
 @Component({
     selector: 'app-restaurant-page',
     standalone: true,
-    providers: [RestaurantService, UserFacade],
+    providers: [RestaurantService, UserFacade, restaurantResolver],
     templateUrl: './restaurant-page.component.html',
     styleUrl: './restaurant-page.component.scss',
     imports: [TabViewModule, MenuModule, CommonModule, CdkDropList, CdkDrag, MatTabsModule, HttpClientModule, ShowAgePipe, ]
@@ -64,13 +65,10 @@ export class RestaurantPageComponent implements OnInit {
       ];
     }, 1000);
 
-    // console.log(this.users, this.userFacade.fetchUsers());
-    
-    this.resService.getUsers().subscribe(res => {
-      console.log(res);
-      
-      this.users = res;
-    })
+    this.userFacade.fetchUsers().then((value: any) => {
+      this.users = value.payload;
+  })
+ 
   }
 
 

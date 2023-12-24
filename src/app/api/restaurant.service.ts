@@ -13,8 +13,8 @@ export class RestaurantService {
   private apiUrl = 'http://localhost:3000';
 
 
-  getUsers(): Observable<User[]> {
-    return this.http.get<any>(`${this.apiUrl}/users`);
+  getUsers(): Promise<User[]> {
+    return this.http.get<any>(`${this.apiUrl}/users`).toPromise();
   }
 
   postUsers(user: User): Observable<any> {
