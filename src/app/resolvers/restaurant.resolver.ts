@@ -10,12 +10,11 @@ export class restaurantResolver implements Resolve<boolean> {
 
     async resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
         // const restaurantId = route.paramMap.get('id');
-        await Promise.all([
+        // await Promise.all([
             this.userFacade.fetchUsers().then((value: any) => {
-                console.log(value.payload);
-                
+                console.log('Resolver',value.payload);
             })
-        ])
+        // ])
         return true;
     }
 }

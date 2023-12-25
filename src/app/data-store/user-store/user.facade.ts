@@ -12,7 +12,8 @@ import { Dispatch } from "@ngxs-labs/dispatch-decorator";
 
 export class UserFacade {
 
-    @Select(userState.users) users$: Observable<User[]> | undefined
+    @Select(userState.users) users$!: Observable<User[]>;
+
     constructor(private restaurantService: RestaurantService) {
 
     }

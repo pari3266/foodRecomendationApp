@@ -1,8 +1,6 @@
 import { Injectable, NgModule } from "@angular/core";
 import { User } from "../../models/user";
 import {Action, NgxsModule, Selector, State, StateContext} from '@ngxs/store';
-import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
-import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 
 export interface userStateModel {
     users: User[];

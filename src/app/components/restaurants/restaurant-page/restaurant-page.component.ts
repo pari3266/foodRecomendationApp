@@ -5,12 +5,14 @@ import { MenuItem } from 'primeng/api';
 import { Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { RestaurantService } from '../../../api/restaurant.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ShowAgePipe } from "../../../pipes/show-age.pipe";
 import { UserFacade } from '../../../data-store/user-store/user.facade';
 import { restaurantResolver } from '../../../resolvers/restaurant.resolver';
+import { Store } from '@ngxs/store';
+import { userStore } from '../../../data-store/user-store/user.store';
 
 interface Tab {
   title: string;
@@ -18,12 +20,12 @@ interface Tab {
 }
 
 @Component({
-    selector: 'app-restaurant-page',
-    standalone: true,
-    providers: [RestaurantService, UserFacade, restaurantResolver],
-    templateUrl: './restaurant-page.component.html',
-    styleUrl: './restaurant-page.component.scss',
-    imports: [TabViewModule, MenuModule, CommonModule, CdkDropList, CdkDrag, MatTabsModule, HttpClientModule, ShowAgePipe, ]
+  selector: 'app-restaurant-page',
+  standalone: true,
+  providers: [RestaurantService, UserFacade, restaurantResolver],
+  templateUrl: './restaurant-page.component.html',
+  styleUrl: './restaurant-page.component.scss',
+  imports: [TabViewModule, MenuModule, CommonModule, CdkDropList, CdkDrag, MatTabsModule, HttpClientModule, ShowAgePipe, userStore]
 })
 
 export class RestaurantPageComponent implements OnInit {
@@ -47,9 +49,10 @@ export class RestaurantPageComponent implements OnInit {
   menuItems: MenuItem[] | undefined;
   closedTabIndex: number | null = null; // Index of the recently closed tab
 
-  users : any = [];
+  users: any = [];
   constructor(private resService: RestaurantService,
-    private userFacade: UserFacade) {
+    private userFacade: UserFacade,
+    private store: Store) {
     // Subscribe to tab closure events
     this.closeTabSubject.subscribe((index) => this.closeTab(index));
   }
@@ -65,10 +68,19 @@ export class RestaurantPageComponent implements OnInit {
       ];
     }, 1000);
 
-    this.userFacade.fetchUsers().then((value: any) => {
-      this.users = value.payload;
-  })
- 
+    // this.userFacade.fetchUsers().then((value: any) => {
+    //   this.users = value.payload;
+    // })
+
+    // setTimeout(() => {
+      this.userFacade.users$?.subscribe(res => {
+        console.log('component',res);
+        this.users = res;
+      })
+    // }, 4000);
+
+    // console.log(this.store.select(state => state.users$));
+
   }
 
 
@@ -98,7 +110,7 @@ export class RestaurantPageComponent implements OnInit {
     console.log(this.closedTabIndex);
 
     if (this.closedTabIndex !== null && this.closedTabIndex >= 0) {
-      this.tabs.splice(this.closedTabIndex, 0, {id: this.closedTabIndex  , title: `tab ${this.closedTabIndex }`, content: `Content tab ${this.closedTabIndex }`, active: false});
+      this.tabs.splice(this.closedTabIndex, 0, { id: this.closedTabIndex, title: `tab ${this.closedTabIndex}`, content: `Content tab ${this.closedTabIndex}`, active: false });
       this.closedTabIndex = null;
     }
   }
@@ -107,7 +119,7 @@ export class RestaurantPageComponent implements OnInit {
     moveItemInArray(this.tabs, event.previousIndex, event.currentIndex);
   }
 
-  
+
   tabChanged(event: any): void {
     // Handle tab change here
     console.log('Tab changed:', event);
